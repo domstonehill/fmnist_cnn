@@ -1,0 +1,1 @@
+DATA_DIR = '/home/bigdata/NFSDatasets/fasion-mnist/csv_files/'
