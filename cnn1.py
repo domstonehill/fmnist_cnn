@@ -169,12 +169,12 @@ def avg_pool_cnn():
 
 
 if __name__ == '__main__':
-    train_data = load_dataset('fashion-mnist_train.csv')
+    train_data = load_dataset('fashion-mnist_train.csv', True)
     test_data = load_dataset('fashion-mnist_test.csv')
 
-    model = build_cnn_model()
+    # model = build_cnn_model()
     # model = build_parallel_cnn()
-    # model = avg_pool_cnn()
+    model = avg_pool_cnn()
 
     print(model.summary())
     plot_model(model)
