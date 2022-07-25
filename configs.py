@@ -1,1 +1,1 @@
-DATA_DIR = '/home/bigdata/NFSDatasets/fasion-mnist/csv_files/'
+DATA_DIR = '/home/dominik/cifsmnt/fasion-mnist/csv_files/'

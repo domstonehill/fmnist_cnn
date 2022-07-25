@@ -66,18 +66,18 @@ def load_dataset(filename, train=False):
 
 def build_cnn_model():
     model = tf.keras.Sequential([
-        layers.Conv2D(32, kernel_size=(5, 5), input_shape=(28, 28, 1), padding='same', activation='relu'),
+        layers.Conv2D(10, kernel_size=(5, 5), input_shape=(28, 28, 1), padding='same', activation='relu'),
         layers.MaxPool2D(),
-        layers.Dropout(0.25),
-        layers.Conv2D(64, kernel_size=(5, 5), padding='same', activation='relu'),
+        # layers.Dropout(0.25),
+        layers.Conv2D(16, kernel_size=(5, 5), padding='same', activation='relu'),
         layers.MaxPool2D(),
-        layers.Dropout(0.25),
-        layers.Conv2D(64, kernel_size=(5, 5), padding='same', activation='relu'),
+        # layers.Dropout(0.25),
+        layers.Conv2D(28, kernel_size=(5, 5), padding='same', activation='relu'),
         layers.MaxPool2D(),
         layers.Dropout(0.25),
         layers.Flatten(),
-        layers.Dense(512, activation='relu'),
-        layers.Dense(512, activation='relu'),
+        layers.Dense(128, activation='relu'),
+        layers.Dense(64, activation='relu'),
         layers.Dense(10, activation='softmax')
     ])
 
@@ -112,7 +112,7 @@ def build_parallel_cnn():
     d = layers.Flatten()(cat)
 
     # Dense Network
-    d = layers.Dense(1028, activation='relu')(d)
+    d = layers.Dense(128, activation='relu')(d)
     d = layers.Dropout(0.5)(d)
 
     # Output
@@ -139,16 +139,20 @@ def avg_pool_cnn():
     inputs = layers.Input(shape=(28, 28, 1))
 
     # Convolutions
-    x = layers.Conv2D(16, kernel_size=(3, 3), activation='relu')(inputs)
+    x = layers.Conv2D(10, kernel_size=(3, 3), padding='same', activation='relu')(inputs)
     x = layers.AveragePooling2D()(x)
-    x = layers.Dropout(0.25)(x)
-    x = layers.Conv2D(16, kernel_size=(3, 3), activation='relu')(x)
+    # x = layers.Dropout(0.25)(x)
+    x = layers.Conv2D(16, kernel_size=(3, 3), padding='same', activation='relu')(x)
+    x = layers.AveragePooling2D()(x)
+    # x = layers.Dropout(0.25)(x)
+    x = layers.Conv2D(28, kernel_size=(3, 3), padding='same', activation='relu')(x)
     x = layers.AveragePooling2D()(x)
     x = layers.Dropout(0.25)(x)
 
     # Flatten and Dense Layers
     flat = layers.Flatten()(x)
-    d = layers.Dense(256, activation='relu')(flat)
+    d = layers.Dense(128, activation='relu')(flat)
+    d = layers.Dense(64, activation='relu')(d)
 
     # Output Layers
     output = layers.Dense(10, activation='softmax')(d)
@@ -169,7 +173,7 @@ def avg_pool_cnn():
 
 
 if __name__ == '__main__':
-    train_data = load_dataset('fashion-mnist_train.csv', True)
+    train_data = load_dataset('fashion-mnist_train.csv', False)
     test_data = load_dataset('fashion-mnist_test.csv')
 
     # model = build_cnn_model()
